@@ -48,6 +48,7 @@ func New(path string, cache int, handles int, close func() error, drop func()) (
 	if handles < minHandles {
 		handles = minHandles
 	}
+	cache /= 2 // scale down to match "real" RAM usage by process
 
 	// Open the db and recover any potential corruptions
 	db, err := leveldb.OpenFile(path, &opt.Options{
