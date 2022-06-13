@@ -26,10 +26,10 @@ type Database struct {
 // metrics reporting should use for surfacing internal stats.
 func New(path string, cache int, handles int, close func() error, drop func()) (*Database, error) {
 	db, err := pebble.Open(path, &pebble.Options{
-		Cache:           pebble.NewCache(int64(cache / 2)), // default 8 MB
-		MemTableSize:    cache / 4,                         // default 4 MB
-		MaxOpenFiles:    handles,                           // default 1000
-		WALBytesPerSync: 0,                                 // default 0 (matches RocksDB = no background syncing)
+		Cache:           pebble.NewCache(int64(cache * 2 / 3)), // default 8 MB
+		MemTableSize:    cache / 3,                             // default 4 MB
+		MaxOpenFiles:    handles,                               // default 1000
+		WALBytesPerSync: 0,                                     // default 0 (matches RocksDB = no background syncing)
 	})
 
 	if err != nil {
