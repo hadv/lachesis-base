@@ -40,6 +40,14 @@ func TestCompileFilter(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "ty123ui", res)
 
+	fn, err = CompileFilter("qw%d%2s123%%", "--%d__%s~~%%")
+	require.NoError(t, err)
+	res, err = fn("qw456AB123")
+	require.Error(t, err)
+	res, err = fn("qw456AB123%")
+	require.NoError(t, err)
+	require.Equal(t, "--456__AB~~%", res)
+
 	fn, err = CompileFilter("qw%d%2s123", "--%d__%s~~")
 	require.NoError(t, err)
 	_, err = fn("qw456ABC123")

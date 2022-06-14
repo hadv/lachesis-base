@@ -15,6 +15,7 @@ func parseScanfOps(template string) (string, error) {
 				ops += "%d"
 			} else if ch == 's' {
 				ops += "%s"
+			} else if ch == '%' {
 			} else if !unicode.IsLetter(ch) {
 				continue
 			} else {
