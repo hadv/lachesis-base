@@ -8,7 +8,7 @@ import (
 
 func TestCompileFilter(t *testing.T) {
 	_, err := CompileFilter("%d", "")
-	require.Error(t, err, "template ops for scanf don't match scanf ops")
+	require.NoError(t, err)
 	_, err = CompileFilter("%d", "%s")
 	require.Error(t, err, "template ops for scanf don't match scanf ops")
 	_, err = CompileFilter("%d%s", "%s")
@@ -16,7 +16,7 @@ func TestCompileFilter(t *testing.T) {
 	_, err = CompileFilter("dd%d%sdd", "dd%sss")
 	require.Error(t, err, "template ops for scanf don't match scanf ops")
 	_, err = CompileFilter("dd%d%sdd", "%%")
-	require.Error(t, err, "template ops for scanf don't match scanf ops")
+	require.NoError(t, err)
 
 	_, err = CompileFilter("%", "%s")
 	require.Error(t, err, "non-closed %")
