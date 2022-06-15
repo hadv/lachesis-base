@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/cockroachdb/pebble"
+	"github.com/status-im/keycard-go/hexutils"
 
 	"github.com/Fantom-foundation/lachesis-base/kvdb"
 )
@@ -48,6 +49,7 @@ func New(path string, cache int, handles int, close func() error, drop func()) (
 // Close stops the metrics collection, flushes any pending data to disk and closes
 // all io accesses to the underlying key-value store.
 func (db *Database) Close() error {
+	println("pebble close")
 	db.quitLock.Lock()
 	defer db.quitLock.Unlock()
 
@@ -291,6 +293,7 @@ type batch struct {
 func (b *batch) Put(key, value []byte) error {
 	err := b.b.Set(key, value, pebble.NoSync)
 	b.size += len(value)
+	println("pebble batch put", hexutils.BytesToHex(key), hexutils.BytesToHex(value), b.size)
 	return err
 }
 
@@ -308,6 +311,7 @@ func (b *batch) ValueSize() int {
 
 // Write flushes any accumulated data to disk.
 func (b *batch) Write() error {
+	println("pebble batch write", b.size)
 	return b.db.Apply(b.b, pebble.NoSync)
 }
 
