@@ -6,7 +6,6 @@ package leveldb
 import (
 	"sync"
 
-	"github.com/status-im/keycard-go/hexutils"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/errors"
 	"github.com/syndtr/goleveldb/leveldb/filter"
@@ -79,7 +78,6 @@ func New(path string, cache int, handles int, close func() error, drop func()) (
 // Close stops the metrics collection, flushes any pending data to disk and closes
 // all io accesses to the underlying key-value store.
 func (db *Database) Close() error {
-	println("leveldb close")
 	db.quitLock.Lock()
 	defer db.quitLock.Unlock()
 
@@ -202,7 +200,6 @@ type batch struct {
 func (b *batch) Put(key, value []byte) error {
 	b.b.Put(key, value)
 	b.size += len(value)
-	println("leveldb batch put", hexutils.BytesToHex(key), hexutils.BytesToHex(value), b.size)
 	return nil
 }
 
@@ -220,7 +217,6 @@ func (b *batch) ValueSize() int {
 
 // Write flushes any accumulated data to disk.
 func (b *batch) Write() error {
-	println("leveldb batch write", b.size)
 	return b.db.Write(b.b, nil)
 }
 
