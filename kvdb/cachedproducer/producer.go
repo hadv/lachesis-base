@@ -39,6 +39,7 @@ func openDB(p kvdb.DBProducer, c *cacheState, name string) (kvdb.Store, error) {
 			{ // protected by mutex
 				c.mu.Lock()
 				counter := c.refCounter[name]
+				println("close", name, counter)
 				if counter <= 0 {
 					c.mu.Unlock()
 					return errors.New("called Close more times than OpenDB")
@@ -53,6 +54,7 @@ func openDB(p kvdb.DBProducer, c *cacheState, name string) (kvdb.Store, error) {
 				c.mu.Unlock()
 			}
 			if toClose {
+				defer println("closed")
 				return realClose()
 			}
 			return nil

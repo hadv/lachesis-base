@@ -248,11 +248,12 @@ func (p *SyncedPool) flush(id []byte) error {
 	}
 
 	// write clean flags
-	for _, w := range p.wrappers {
+	for n, w := range p.wrappers {
 		db, err := w.Flushable.InitUnderlyingDb()
 		if err != nil {
 			return err
 		}
+		println("put clean", n, hexutils.BytesToHex(id))
 		err = db.Put(p.flushIDKey, append([]byte{CleanPrefix}, id...))
 		if err != nil {
 			return err
@@ -317,6 +318,7 @@ func (p *SyncedPool) checkDBsSynced(flushID []byte) ([]byte, error) {
 			flushID = mark
 		}
 		if !bytes.Equal(mark, flushID) {
+			println(hexutils.BytesToHex(mark), hexutils.BytesToHex(flushID))
 			return flushID, fmt.Errorf("not synced: %s", list())
 		}
 	}
