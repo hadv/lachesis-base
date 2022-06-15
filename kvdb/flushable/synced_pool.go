@@ -296,7 +296,7 @@ func (p *SyncedPool) checkDBsSynced(flushID []byte) ([]byte, error) {
 	var (
 		descrs []string
 		list   = func() string {
-			return strings.Join(descrs, ",\n")
+			return strings.Join(descrs, ", ")
 		}
 	)
 	for name, w := range p.wrappers {
@@ -319,7 +319,7 @@ func (p *SyncedPool) checkDBsSynced(flushID []byte) ([]byte, error) {
 		}
 		if !bytes.Equal(mark, flushID) {
 			println(hexutils.BytesToHex(mark), hexutils.BytesToHex(flushID))
-			return flushID, fmt.Errorf("not synced: %s", list())
+			return flushID, fmt.Errorf("not synced: %s != %s", hexutils.BytesToHex(flushID), list())
 		}
 	}
 	return flushID, nil
