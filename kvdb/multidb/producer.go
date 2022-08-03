@@ -128,6 +128,7 @@ func (p *Producer) OpenDB(req string) (kvdb.Store, error) {
 	if producer == nil {
 		return nil, fmt.Errorf("missing producer '%s'", route.Type)
 	}
+	println("open route name: " + route.Name)
 	db, err := producer.OpenDB(route.Name)
 	if err != nil {
 		return nil, err
