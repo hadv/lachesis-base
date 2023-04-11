@@ -222,6 +222,10 @@ func (m *MockDropableStore) Stat(arg0 string) (string, error) {
 	return ret0, ret1
 }
 
+func (m *MockDropableStore) AncientDatadir() (string, error) {
+	return "", nil
+}
+
 // Stat indicates an expected call of Stat.
 func (mr *MockDropableStoreMockRecorder) Stat(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()

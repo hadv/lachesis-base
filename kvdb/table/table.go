@@ -71,6 +71,10 @@ func (t *Table) NewBatch() kvdb.Batch {
 	return &batch{t.underlying.NewBatch(), t.prefix}
 }
 
+func (t *Table) AncientDatadir() (string, error) {
+	return "", nil
+}
+
 func incPrefix(prefix []byte) []byte {
 	if len(prefix) == 0 {
 		return nil

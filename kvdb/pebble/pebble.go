@@ -261,6 +261,10 @@ func (db *Database) NewIterator(prefix []byte, start []byte) kvdb.Iterator {
 	return &x
 }
 
+func (db *Database) AncientDatadir() (string, error) {
+	return "", nil
+}
+
 type iterator struct {
 	*pebble.Iterator
 	isStarted bool

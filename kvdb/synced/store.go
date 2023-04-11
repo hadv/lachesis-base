@@ -77,6 +77,10 @@ func (s *store) NewBatch() kvdb.Batch {
 
 }
 
+func (s *store) AncientDatadir() (string, error) {
+	return "", nil
+}
+
 /*
  * Batch
  */

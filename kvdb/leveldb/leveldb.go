@@ -273,6 +273,10 @@ func (db *Database) Path() string {
 	return db.filename
 }
 
+func (db *Database) AncientDatadir() (string, error) {
+	return "", nil
+}
+
 // batch is a write-only leveldb batch that commits changes to its host database
 // when Write is called. A batch cannot be used concurrently.
 type batch struct {

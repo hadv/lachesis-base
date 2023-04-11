@@ -236,6 +236,10 @@ func (w *Flushable) Compact(start []byte, limit []byte) error {
 	return w.underlying.Compact(start, limit)
 }
 
+func (w *Flushable) AncientDatadir() (string, error) {
+	return w.underlying.AncientDatadir()
+}
+
 /*
  * Iterator
  */
